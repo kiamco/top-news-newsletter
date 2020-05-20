@@ -7,18 +7,15 @@ const secrets = require('../config/secrets.js');
 const userModel = require('../database/models/userModel.js');
 
 
-Router.post('/register', (req, res) => {
+Router.post('/subscribe', (req, res) => {
     let user = req.body;
-    const hash = bycrypt.hashSync(user.password, 10);
-    user.password = hash;
-
     /* write function to add user to database */
 
     userModel.addUser(user)
         .then(users => {
             res.status(201).json({
                 users,
-                message: `Successfully created user: ${user.username} `
+                message: `${user.username}: subscribed `
             })
         })
         .catch(err => {
@@ -54,8 +51,6 @@ Router.post('/login', (req, res) => {
                 message: "Server issue"
             });
         });
-
-
 });
 
 function genToken(user) {
