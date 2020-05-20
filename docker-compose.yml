@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+  # postgres db
+  db:
+    image: postgres:latest
+    container_name: news_pg
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: dev
+      POSTGRES_DB: top_news
+    volumes:
+      - ./pgdataDev:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  #backend server test server
+  backend:
+    image: node:13
+    container_name: node_server_news_test
+    environment:
+      PG_CONNECTION_STRING_DEV: "${PG_CONNECTION_STRING_DEV}"
+      NODE_ENV: development
+    volumes:
+      - ./:/app
+    working_dir: /app
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    command: npm run dev
