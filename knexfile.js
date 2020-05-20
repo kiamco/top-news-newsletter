@@ -1,30 +1,30 @@
 // Update with your config settings.
-
+require('dotenv').config();
 module.exports = {
 
     development: {
-      client: 'pg',
-          debug: true,
-          connection: process.env.PG_CONNECTION_STRING_DEV,
-          acquireConnectionTimeout: 4 * 1000,
-          pool: {
-              min: 0,
-              max: 7,
-              afterCreate: (conn, done) => {
-                  conn.query('SET timezone="UTC";', (err) => {
-                      if (err) {
-                          console.log(err)
-                      }
-                      done(err, conn)
-                  })
-              }
-          },
-          migrations: {
-              directory: './database/development/migrations',
-          },
-          seeds: {
-              directory: './database/development/seeds'
-          },
+        client: 'pg',
+        debug: true,
+        connection: process.env.PG_CONNECTION_STRING_DEV,
+        acquireConnectionTimeout: 4 * 1000,
+        pool: {
+            min: 0,
+            max: 7,
+            afterCreate: (conn, done) => {
+                conn.query('SET timezone="UTC";', (err) => {
+                    if (err) {
+                        console.log(err)
+                    }
+                    done(err, conn)
+                })
+            }
+        },
+        migrations: {
+            directory: './database/development/migrations',
+        },
+        seeds: {
+            directory: './database/development/seeds'
+        },
     },
 
     production: {
