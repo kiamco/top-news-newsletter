@@ -15,17 +15,15 @@ Router.post('/subscribe', (req, res) => {
         .then(users => {
             res.status(201).json({
                 users,
-                message: `${user.username}: subscribed `
+                message: `${user.email}: subscribed `
             })
         })
         .catch(err => {
             res.status(400).json({
                 err,
-                message: err.errno === 19 ? 'User exists' : "Server error"
+                message: err.errno === 19 ? 'Email exists' : "Server error"
             });
         })
-
-
 });
 
 Router.post('/login', (req, res) => {

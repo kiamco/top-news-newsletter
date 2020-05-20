@@ -2,15 +2,15 @@
 const db = require('../../config/dbConfig');
 
 const find = () => {
-    return db('users').select('*');
+    return db('emails').select('*');
 }
 
 const findByUser = (user) => {
-    return db('users').select('*').where('username', user);
+    return db('emails').select('*').where('username', user);
 }
 
 const addUser = (userObj) => {
-    return db('users').insert(userObj);
+    return db('emails').insert(userObj);
 }
 
 module.exports = {
