@@ -11,7 +11,7 @@ services:
     volumes:
       - ./pgdataDev:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5432:5431"
 
   #backend server test server
   backend:
@@ -26,5 +26,5 @@ services:
     depends_on:
       - db
     ports:
-      - "5000:5000"
+      - "5000:8000"
     command: npm run dev
