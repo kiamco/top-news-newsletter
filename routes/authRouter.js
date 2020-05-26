@@ -1,11 +1,11 @@
 const Router = require('express').Router();
 const bycrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const secrets = require('../config/secrets.js');
+const secrets = require('../config/secrets');
+const restricted = require('../middleware/restricted');
 
 //data model for users
 const userModel = require('../database/models/userModel.js');
-
 
 Router.post('/subscribe', (req, res) => {
     let user = req.body;
@@ -27,7 +27,10 @@ Router.post('/subscribe', (req, res) => {
 });
 
 Router.post('/login', (req, res) => {
-    let { username, password } = req.body;
+    let {
+        username,
+        password
+    } = req.body;
 
     /* write function to add user to login*/
     userModel.findByUser(username).then(item => {
@@ -49,6 +52,21 @@ Router.post('/login', (req, res) => {
                 message: "Server issue"
             });
         });
+});
+
+Router.get('/users', restricted, async (req, res) => {
+    try {
+        const users = await userModel.find();
+        return res.status(200).json({
+            message: "success",
+            data: users
+        });
+    } catch (e) {
+        return res.status(500).json({
+            message: "server error ",
+            err: e
+        });
+    };
 });
 
 function genToken(user) {

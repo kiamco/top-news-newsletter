@@ -6,12 +6,15 @@ const server = express();
 
 /*  import Routes here */
 const AuthRouter = require('../routes/authRouter.js');
+const MailRouter = require('../routes/emailRouter.js');
 
 server.use(express.json());
 server.use(helmet());
 server.use(cors());
-server.use('/', AuthRouter);
 
+// endpoints
+server.use('/', AuthRouter);
+server.use('/mail', MailRouter)
 
 server.get('/', (req, res) => {
     res.send("server running");

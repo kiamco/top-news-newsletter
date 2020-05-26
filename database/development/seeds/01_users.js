@@ -8,6 +8,7 @@ exports.seed = function(knex) {
             const salt = bcrypt.genSaltSync(10);;
             return knex('emails').insert([{
                 email: 'kimbo',
+                categories: ["technology", "sports"]
             }, ]);
         });
 };

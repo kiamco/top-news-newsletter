@@ -7,6 +7,7 @@ exports.up = function(knex) {
             email.string('email', 255)
                 .notNullable()
                 .unique();
+            email.specificType('categories', 'text ARRAY');
         });
 };
 
